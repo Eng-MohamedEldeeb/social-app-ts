@@ -1,24 +1,31 @@
 import { connect } from "mongoose";
 
-interface IConnectDB<> {
-  dbConnect(): Promise<void>;
-}
+class DbConnection {
+  private static instance: DbConnection;
 
-// class ConnectDB implements IConnectDB {
-class ConnectDB {
-  constructor() {}
+  private dbURI = process.env.DB_URI as string;
 
-  // DB Connection Method
-  async dbConnect(): Promise<void> {
-    await connect(process.env.DB_URI as string)
+  private constructor() {}
+
+  public static get instanceClass(): DbConnection {
+    if (!this.instance) {
+      console.log("New Instance Saved In Memory");
+      this.instance = new DbConnection();
+      return this.instance;
+    } else {
+      console.log("Old Instance Returned From The Memory");
+      return this.instance;
+    }
+  }
+
+  // establishing dbConnection:
+  public async connectDB() {
+    await connect(this.dbURI)
       .then(() => console.log("DB Connected Successfully"))
-      .catch((err: string) =>
-        console.error({
-          msg: "DB Error",
-          err,
-        })
-      );
+      .catch((err) => console.error({ msg: "DB Connection Error", err }));
   }
 }
 
-export default new ConnectDB();
+const dbConnection = DbConnection.instanceClass;
+
+export default dbConnection;

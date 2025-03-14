@@ -1,6 +1,6 @@
 import { Schema, Types } from "mongoose";
-import IUser from "../../../Interfaces/User.interface.js";
-import { UserPrivacy, UserRole } from "../../../Types/User.type.js";
+import IUser from "../../Config/Interfaces/User.interface.js";
+import { UserPrivacy, UserRole } from "../../Config/Types/User.type.js";
 import { postsVirtual, setUserAge } from "../Virtual/User.virtual.js";
 
 const userSchema = new Schema<IUser>(

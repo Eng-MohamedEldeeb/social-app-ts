@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { TFile } from "../../utils/Upload/Types/file.types.js";
+import { TFile } from "../../../../utils/Upload/Types/file.types.js";
 
 export enum UserRole {
   ADMIN = "admin",

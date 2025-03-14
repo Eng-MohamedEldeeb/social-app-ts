@@ -1,0 +1,29 @@
+{
+  "name": "social-app-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "concurrently \"tsc --watch\" \"node --watch --env-file=config/.env.dev dist/index.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eng-MohamedEldeeb/social-app-ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eng-MohamedEldeeb/social-app-ts/issues"
+  },
+  "homepage": "https://github.com/Eng-MohamedEldeeb/social-app-ts#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "concurrently": "^9.1.2"
+  }
+}

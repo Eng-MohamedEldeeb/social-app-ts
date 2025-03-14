@@ -1,39 +1,16 @@
-import {
-  FilterQuery,
-  Model,
-  PopulateOptions,
-  ProjectionType,
-  QueryOptions,
-  QuerySelector,
-} from "mongoose";
+// Model Type:
+import { Model } from "mongoose";
+
+// DB Services:
+import { findOne } from "./services/findOne.service.js";
+import { create } from "./services/create.service.js";
 
 class DbService<TDocument> {
   constructor(private model: Model<TDocument>) {}
 
-  public async create(data: Partial<TDocument>): Promise<TDocument> {
-    const document = await this.model.create(data);
-    return document;
-  }
+  public create = create(this.model);
 
-  public async findOne({
-    filter,
-    select,
-    populate,
-    options,
-  }: {
-    filter?: FilterQuery<TDocument>;
-    select?: ProjectionType<TDocument>;
-    populate?: PopulateOptions[];
-    options?: QueryOptions;
-  }): Promise<TDocument | null> {
-    const document = await this.model
-      .findOne(filter || {}, select || {}, options || {})
-      .populate(populate || []);
-
-    if (!document) return null;
-
-    return document;
-  }
+  public findOne = findOne(this.model);
 }
 
 export default DbService;

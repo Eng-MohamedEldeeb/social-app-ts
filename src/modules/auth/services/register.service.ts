@@ -15,7 +15,7 @@ import successResponse from "../../../utils/Res/success.response.js";
 
 export const registerService = (model: DbService<IUser>) => {
   return asyncHandler(
-    asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    async (req: Request, res: Response, next: NextFunction) => {
       // User Data:
       const { userName, email }: ISignUp = req.body;
 
@@ -45,6 +45,6 @@ export const registerService = (model: DbService<IUser>) => {
         status: 201,
         data: user,
       });
-    })
+    }
   );
 };

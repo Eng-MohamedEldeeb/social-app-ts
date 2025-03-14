@@ -1,8 +1,8 @@
 // Express Router:
 import { Router } from "express";
-import authService from "./auth.service.js";
 
 // AuthService:
+import authService from "./auth.service.js";
 
 const router: Router = Router();
 

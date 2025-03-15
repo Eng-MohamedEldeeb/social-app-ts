@@ -1,6 +1,10 @@
 import { Schema, Types } from "mongoose";
 import IUser from "../../Config/Interfaces/User.interface.js";
-import { UserPrivacy, UserRole } from "../../Config/Types/User.type.js";
+import {
+  UserGender,
+  UserPrivacy,
+  UserRole,
+} from "../../Config/Types/User.type.js";
 import { postsVirtual, setUserAge } from "../Virtual/User.virtual.js";
 
 // Validation:
@@ -46,7 +50,7 @@ const userSchema = new Schema<IUser>(
       required: [true, "userName field is required"],
       unique: [true, "userName already exists"],
       validate: {
-        validator: validateField(validationPatterns.emailRegEx),
+        validator: validateField(validationPatterns.userNameRegEx),
         message: "In-valid userName",
       },
     },
@@ -64,13 +68,17 @@ const userSchema = new Schema<IUser>(
       enum: UserPrivacy,
       default: Boolean(UserPrivacy.PUBLIC),
     },
+
     role: { type: String, enum: UserRole, default: UserRole.USER },
+    gender: { type: String, enum: UserGender, default: UserGender.MALE },
 
     // Changed Credentials At:
     changedPasswordAt: Date,
 
     // Changed Credentials At:
     deletedAt: { type: Date, expires: "1m" },
+
+    verified: { type: Boolean, default: false },
 
     otp: {
       otpType: String,

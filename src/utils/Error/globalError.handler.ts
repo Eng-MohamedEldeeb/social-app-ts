@@ -9,7 +9,7 @@ const globalErrorHandler = (
 ) => {
   res.status(error.status || 500).json({
     success: false,
-    error: error.error,
+    error: error.error || error.message,
   });
 };
 

@@ -7,7 +7,7 @@ const asyncHandler = (fn: Function) => {
     await fn(req, res, next).catch((error: IError) => {
       return errorResponse({
         next,
-        error: error.error,
+        error: error.error || error.message,
         status: error.status || 400,
       });
     });

@@ -1,33 +1,24 @@
 // Joi:
 import joi from "joi";
-
-// Enum:
-import { UserRole } from "../../../db/models/Config/Types/User.type.js";
-
-// RegEx Patterns:
-import * as validationPatterns from "./../../../utils/Validation/regex.patterns.js";
+import generalFields from "../../../utils/Validation/genral.fields.js";
+import { avatar } from "./types/allowedFiles.type.js";
 
 export const signupValidation = {
   body: joi.object().keys({
-    firstName: joi.string().required(),
-    lastName: joi.string().required(),
-    phone: joi.string().pattern(validationPatterns.phoneRegEx).required(),
+    firstName: generalFields.firstName.required(),
+    lastName: generalFields.lastName.required(),
 
-    userName: joi.string().pattern(validationPatterns.userNameRegEx).required(),
-    email: joi
-      .string()
-      .pattern(validationPatterns.emailRegEx)
-      .email()
-      .required(),
-    password: joi.string().pattern(validationPatterns.passwordRegEx).required(),
-    confirmPassword: joi
-      .string()
-      .pattern(validationPatterns.passwordRegEx)
-      .valid(joi.ref("password"))
-      .required(),
+    userName: generalFields.userName.required(),
+    email: generalFields.email.required(),
+    phone: generalFields.phone,
+    password: generalFields.password.required(),
+    confirmPassword: generalFields.confirmPassword.required(),
 
-    birthDate: joi.date(),
+    birthDate: generalFields.birthDate,
 
-    role: joi.boolean().valid(UserRole).default(UserRole.USER),
+    gender: generalFields.gender.required(),
+    role: generalFields.role,
   }),
+
+  file: generalFields.file({ allowedFiles: Object.values(avatar) }),
 };

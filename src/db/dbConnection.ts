@@ -26,6 +26,4 @@ class DbConnection {
   }
 }
 
-const dbConnection = DbConnection.instanceClass;
-
-export default dbConnection;
+export default DbConnection.instanceClass;

@@ -1,16 +1,19 @@
-import { UserRole } from "../../../../db/models/Config/Types/User.type.js";
+import {
+  UserGender,
+  UserRole,
+} from "../../../../db/models/Config/Types/User.type.js";
 
 interface ISignUp {
   firstName: string;
   lastName: string;
   phone: string;
 
-  email: string;
   userName: string;
+  email: string;
   password: string;
 
-  private: boolean;
-  role: UserRole;
+  role?: UserRole;
+  gender: UserGender;
 }
 
 interface ILogin {

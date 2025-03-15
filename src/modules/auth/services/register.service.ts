@@ -12,12 +12,23 @@ import { ISignUp } from "./types/auth.types.js";
 import asyncHandler from "../../../utils/Error/async.handler.js";
 import errorResponse from "../../../utils/Res/error.response.js";
 import successResponse from "../../../utils/Res/success.response.js";
+import cloud from "../../../utils/Upload/cloud/cloudinary.js";
+import { folderTypes } from "../../../utils/Upload/Types/file.types.js";
+import { UploadApiResponse } from "cloudinary";
 
 export const registerService = (model: DbService<IUser>) => {
   return asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       // User Data:
-      const { userName, email }: ISignUp = req.body;
+      const {
+        firstName,
+        lastName,
+        userName,
+        email,
+        phone,
+        password,
+        gender,
+      }: ISignUp = req.body;
 
       // Searching For Existing User:
       const checkUser = await model.findOne({
@@ -37,8 +48,32 @@ export const registerService = (model: DbService<IUser>) => {
           status: 409,
         });
 
-      const user = await model.create(req.body);
+      const user = await model.create({
+        firstName,
+        lastName,
+        userName,
+        email,
+        phone,
+        password,
+        gender,
+      });
+      if (req.file) {
+        const folder = `${process.env.APP_NAME as string}/user_${user._id}/${
+          folderTypes.avatar
+        }`;
 
+        await cloud.uploader
+          .upload(req.file.path, { folder })
+          .then(async (data: UploadApiResponse) => {
+            const { public_id, secure_url } = data;
+            user.avatar = {
+              public_id,
+              secure_url,
+            };
+            await user.save();
+          })
+          .catch((error) => console.error(error));
+      }
       return successResponse<IUser>({
         res,
         msg: "User Created Successfully",

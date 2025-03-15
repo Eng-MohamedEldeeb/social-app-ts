@@ -1,9 +1,15 @@
 import { Types } from "mongoose";
-import { TUser, TUserRequest, UserRole } from "../Types/User.type.js";
+import {
+  TUser,
+  TUserRequest,
+  UserGender,
+  UserRole,
+} from "../Types/User.type.js";
 import { TFile } from "../../../../utils/Upload/Types/file.types.js";
+import { Document } from "mongoose";
 
-interface IUser {
-  _id?: Types.ObjectId;
+interface IUser extends Document<IUser> {
+  // _id?: Types.ObjectId;
   firstName: string;
   lastName: string;
   phone: string;
@@ -25,6 +31,9 @@ interface IUser {
 
   private: boolean;
   role: UserRole;
+  gender: UserGender;
+
+  verified: boolean;
 
   changedPasswordAt: Date;
   createdAt: Date;

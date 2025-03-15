@@ -5,6 +5,10 @@ export enum UserRole {
   ADMIN = "admin",
   USER = "user",
 }
+export enum UserGender {
+  MALE = "male",
+  FEMALE = "female",
+}
 
 export enum UserPrivacy {
   PUBLIC = "false",
@@ -38,6 +42,9 @@ export type TUser = {
 
   private: boolean;
   role: UserRole;
+  gender: UserGender;
+
+  verified: boolean;
 
   changedPasswordAt: Date;
   createdAt: Date;

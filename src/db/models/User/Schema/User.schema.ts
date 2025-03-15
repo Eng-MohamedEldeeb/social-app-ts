@@ -3,6 +3,10 @@ import IUser from "../../Config/Interfaces/User.interface.js";
 import { UserPrivacy, UserRole } from "../../Config/Types/User.type.js";
 import { postsVirtual, setUserAge } from "../Virtual/User.virtual.js";
 
+// Validation:
+import { validateField } from "./../Validation/fields.validate.js";
+import * as validationPatterns from "./../../../../utils/Validation/regex.patterns.js";
+
 const userSchema = new Schema<IUser>(
   {
     // Info:
@@ -32,11 +36,19 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: [true, "email field is required"],
       unique: [true, "email already exists"],
+      validate: {
+        validator: validateField(validationPatterns.emailRegEx),
+        message: "In-valid email",
+      },
     },
     userName: {
       type: String,
       required: [true, "userName field is required"],
       unique: [true, "userName already exists"],
+      validate: {
+        validator: validateField(validationPatterns.emailRegEx),
+        message: "In-valid userName",
+      },
     },
     password: { type: String, required: [true, "password field is required"] },
     passwords: [String],
@@ -74,6 +86,6 @@ const userSchema = new Schema<IUser>(
 
 userSchema.virtual("posts", postsVirtual);
 
-userSchema.virtual("dob").set(setUserAge);
+userSchema.virtual("birthDate").set(setUserAge);
 
 export default userSchema;

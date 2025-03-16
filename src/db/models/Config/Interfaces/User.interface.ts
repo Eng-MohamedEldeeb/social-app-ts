@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import Crypto from "crypto-js";
 import {
   TUser,
   TUserRequest,
@@ -12,7 +13,7 @@ interface IUser extends Document<IUser> {
   // _id?: Types.ObjectId;
   firstName: string;
   lastName: string;
-  phone: string;
+  phone: string | Crypto.lib.CipherParams;
   age?: number;
 
   avatar: TFile;
@@ -32,6 +33,7 @@ interface IUser extends Document<IUser> {
   private: boolean;
   role: UserRole;
   gender: UserGender;
+  birthDate: Date;
 
   verified: boolean;
 
@@ -42,7 +44,7 @@ interface IUser extends Document<IUser> {
 
   otp: {
     otpType: string;
-    otpCode: string;
+    otpCode: string | Crypto.lib.CipherParams;
   };
 
   __v?: number;

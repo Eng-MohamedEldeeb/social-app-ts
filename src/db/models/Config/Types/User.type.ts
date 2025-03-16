@@ -43,6 +43,7 @@ export type TUser = {
   private: boolean;
   role: UserRole;
   gender: UserGender;
+  birthDate: Date;
 
   verified: boolean;
 

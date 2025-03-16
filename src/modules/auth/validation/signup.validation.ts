@@ -1,9 +1,9 @@
 // Joi:
 import joi from "joi";
-import generalFields from "../../../utils/Validation/genral.fields.js";
+import generalFields from "../../../utils/Validation/general.fields.js";
 import { avatar } from "./types/allowedFiles.type.js";
 
-export const signupValidation = {
+export const signupSchema = {
   body: joi.object().keys({
     firstName: generalFields.firstName.required(),
     lastName: generalFields.lastName.required(),

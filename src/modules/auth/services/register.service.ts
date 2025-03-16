@@ -4,17 +4,18 @@ import { NextFunction, Request, Response } from "express";
 // DB Service Type:
 import DbService from "../../../db/dbService.service.js";
 
-// Interfaces:
+// Types:
 import IUser from "../../../db/models/Config/Interfaces/User.interface.js";
 import { ISignUp } from "./types/auth.types.js";
+import { folderTypes } from "../../../utils/Upload/Types/file.types.js";
 
 // Utils:
 import asyncHandler from "../../../utils/Error/async.handler.js";
 import errorResponse from "../../../utils/Res/error.response.js";
 import successResponse from "../../../utils/Res/success.response.js";
 import cloud from "../../../utils/Upload/cloud/cloudinary.js";
-import { folderTypes } from "../../../utils/Upload/Types/file.types.js";
 import { UploadApiResponse } from "cloudinary";
+import SecurityModel from "../../../utils/Security/security.model.js";
 
 export const registerService = (model: DbService<IUser>) => {
   return asyncHandler(
@@ -28,6 +29,7 @@ export const registerService = (model: DbService<IUser>) => {
         phone,
         password,
         gender,
+        birthDate,
       }: ISignUp = req.body;
 
       // Searching For Existing User:
@@ -53,9 +55,10 @@ export const registerService = (model: DbService<IUser>) => {
         lastName,
         userName,
         email,
-        phone,
-        password,
+        phone: SecurityModel.encrypt(phone),
+        password: SecurityModel.hashValue(password),
         gender,
+        birthDate,
       });
       if (req.file) {
         const folder = `${process.env.APP_NAME as string}/user_${user._id}/${
@@ -76,7 +79,7 @@ export const registerService = (model: DbService<IUser>) => {
       }
       return successResponse<IUser>({
         res,
-        msg: "User Created Successfully",
+        msg: "User Created Successfully, You Are Ready To Verify Your Account",
         status: 201,
         data: user,
       });

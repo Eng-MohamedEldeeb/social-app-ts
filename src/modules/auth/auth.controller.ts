@@ -6,11 +6,12 @@ import authService from "./auth.service.js";
 
 // Validation:
 import validate from "../../middlewares/validation.middleware.js";
-import { signupValidation } from "./validation/signup.validation.js";
+import { signupSchema } from "./validation/signup.validation.js";
 
 // File Reader:
 import fileReader from "../../utils/Upload/file.reader.js";
 import { avatar } from "./validation/types/allowedFiles.type.js";
+import { loginSchema } from "./validation/login.validation.js";
 
 const router: Router = Router();
 
@@ -19,8 +20,9 @@ router.post(
   fileReader
     .fileReader({ allowedFiles: Object.values(avatar) })
     .single("avatar"),
-  validate(signupValidation),
+  validate(signupSchema),
   authService.register
 );
+router.post("/login", validate(loginSchema), authService.login);
 
 export default router;

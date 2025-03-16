@@ -6,6 +6,7 @@ import IUser from "../../db/models/Config/Interfaces/User.interface.js";
 
 // User Model:
 import UserModel from "../../db/models/User/User.model.js";
+import loginService from "./services/login.service.js";
 
 // Services:
 import { registerService } from "./services/register.service.js";
@@ -16,6 +17,7 @@ class AuthService {
   constructor() {}
 
   register = registerService(this.model);
+  login = loginService(this.model);
 }
 
 export default new AuthService();

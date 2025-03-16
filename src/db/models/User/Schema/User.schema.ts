@@ -10,6 +10,7 @@ import { postsVirtual, setUserAge } from "../Virtual/User.virtual.js";
 // Validation:
 import { validateField } from "./../Validation/fields.validate.js";
 import * as validationPatterns from "./../../../../utils/Validation/regex.patterns.js";
+import preSaveHook from "../Hook/preSave.hook.js";
 
 const userSchema = new Schema<IUser>(
   {
@@ -95,5 +96,7 @@ const userSchema = new Schema<IUser>(
 userSchema.virtual("posts", postsVirtual);
 
 userSchema.virtual("birthDate").set(setUserAge);
+
+userSchema.pre("save", preSaveHook);
 
 export default userSchema;

@@ -14,6 +14,7 @@ interface ISignUp {
 
   role?: UserRole;
   gender: UserGender;
+  birthDate?: Date;
 }
 
 interface ILogin {

@@ -3,7 +3,7 @@ import {
   UserGender,
   UserRole,
 } from "../../db/models/Config/Types/User.type.js";
-import * as validationPatterns from "./../../utils/Validation/regex.patterns.js";
+import * as validationPatterns from "./regex.patterns.js";
 
 export const fileFields = {
   fieldname: joi.string(),
@@ -27,7 +27,7 @@ export const generalFields = {
     .string()
     .pattern(validationPatterns.passwordRegEx)
     .valid(joi.ref("password")),
-  birthDate: joi.date(),
+  birthDate: joi.date().less("now"),
 
   gender: joi
     .string()

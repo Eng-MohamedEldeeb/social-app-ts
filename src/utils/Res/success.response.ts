@@ -6,7 +6,7 @@ const successResponse = <TData>({
   msg = "done",
   data,
 }: TSuccessResponse<TData>) => {
-  return res.status(status).json({ success: true, status, msg, data });
+  return res.status(status).json({ success: true, msg, data });
 };
 
 export default successResponse;

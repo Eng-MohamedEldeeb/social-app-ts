@@ -9,7 +9,7 @@ type TSuccessResponse<TData> = {
   res: Response;
   status: number;
   msg: string;
-  data: TData;
+  data?: TData;
 };
 
 type TErrorResponse = {

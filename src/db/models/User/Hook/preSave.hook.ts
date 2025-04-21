@@ -19,9 +19,6 @@ const preSaveHook = function (
       length: 4,
       charset: "numeric",
     });
-    console.log("email");
-    console.log(this.isModified("email"));
-    console.log(this.email);
 
     const emailData: IEmailEventOptions = {
       email: this.email,
